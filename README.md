@@ -1,29 +1,20 @@
 ## Product API
 
-Basic api created with `quarkus` project.
+ API to create/read/update/delete products (`/products`)
 
-    References
-        
-        * https://quarkus.io/guides/getting-started-guide
-        * https://quarkus.io/guides/getting-started-testing
-        * https://quarkus.io/guides/hibernate-orm-guide
-        * https://quarkus.io/guides/rest-json-guide
-
-#### Tech
+### Tech
 
 * Quarkus
-* Postgres
+* H2
 * Docker
+* Java 8
 
-#### Start Postgres
+ ### References
+        
+##### https://quarkus.io/guides/getting-started-guide
+##### https://quarkus.io/guides/hibernate-orm-guide
+#####  https://quarkus.io/guides/rest-json-guide
 
-If you have postgres service running in dev, configure `application.properties` file.
-
-> Run postgres container
-
-```bash
-docker run --name=products-api -d -p 5432:5432  -e POSTGRES_PASSWORD=sa -e POSTGRES_USER=sa -e POSTGRES_DB=products-api postgres
-```
 
 ### Build App
 
@@ -39,16 +30,103 @@ mvn clean install
 mvn compile quarkus:dev
 ```
 
-> ENVs
-
-```bash
-export DATABASE_URL=jdbc:postgresql://localhost:5432/products-api
-export DATABASE_USERNAME=""
-export DATABASE_PASSWORD=""
-```
-
 > Run jar
 
 ```bash
-java -jar target/products-api-1.0-SNAPSHOT-runner.jar
-```# products-app
+java -jar target/products-app-main-1.0-SNAPSHOT-runner.jar
+```
+
+
+### Image of project on docker hub
+
+https://hub.docker.com/layers/borysova/myrepository/latest/images/sha256-ae876f02c52c14d1942b4db103b2f6f8a81dd8279639b288a85317bcc24b461d?context=repo
+
+### Examples
+
+#####API requests sent with Postman 
+#####content-type: application/json
+
+
+##### GET
+
+##### http://localhost:8080/products
+
+```bash
+List of all products in JSON:
+
+[{"description":"Rock climbing, ice climbing, mountaineering","id":1,"name":"Helmet","price":60.00},
+{"description":"Versatile gloves for rope manipulation","id":2,"name":"Gloves","price":32.00},
+{"description":"The ideal solution to carry everything you need for any adventure","id":3,"name":"Backpack","price":155.00}]
+```
+
+
+
+##### PUT
+
+###### http://localhost:8080/products/products/1
+
+```bash
+Body:
+     {
+       "description": "Rock climbing, ice climbing, mountaineering",
+       "id": 1,
+       "name": "Helmet",
+       "price": 10
+     }
+
+Response - modified product.
+
+http://localhost:8080/products/products/1 will return project with modified price:
+
+{"description":"Rock climbing, ice climbing, mountaineering","id":1,"name":"Helmet","price":10.00}
+```
+
+
+##### GET 
+/products/{id}
+
+http://localhost:8080/products/5
+
+```bash
+Retrieve product by id:
+
+{"description":"Used to climb up on on fixed rope","id":5,"name":"Ascender","price":48.00}
+```
+
+##### DELETE 
+##### /products/{id}
+
+###### http://localhost:8080/products/4
+```bash
+After requesting products with "id":4 will cause exceptionProductNotFound: Product not found
+
+http://localhost:8080/products will return list without product "id":4
+```
+
+
+
+##### POST
+
+###### http://localhost:8080/products
+
+
+```bash
+Body:
+{"description":"Climbing chalk bag","name":"Bag","price":19.00}
+
+```
+
+
+##### GET 
+
+##### http://localhost:8080/products
+
+```bash
+In response will be added a new product:
+
+{"description": "Climbing chalk bag", "id": 9, "name": "Bag", "price": 19}
+
+
+```
+
+

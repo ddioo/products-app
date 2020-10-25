@@ -24,7 +24,7 @@ public class Product {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="productSeq")
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     public Long getId() {
         return id;
     }

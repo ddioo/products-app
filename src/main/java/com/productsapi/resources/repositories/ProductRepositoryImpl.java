@@ -11,12 +11,10 @@ import javax.persistence.OptimisticLockException;
 import javax.persistence.Query;
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.logging.Logger;
 
 @ApplicationScoped
 public class ProductRepositoryImpl implements ProductRepository {
 
-    Logger logger = Logger.getLogger("Repository");
 
     private final EntityManager entityManager;
 
@@ -59,16 +57,13 @@ public class ProductRepositoryImpl implements ProductRepository {
 
     @Override
     @Transactional
-    public Product update(Product pr) {
-        Product product = entityManager.find(Product.class, pr.getId());
-        logger.info("Inside updete repository: " + product.getDescription());
+    public Product update(Product product) {
         int resultUpdate = entityManager.createQuery("update Product p set p.description = :p1, p.price = :p2, p.name = :p3  where p.id=:id ")
-                .setParameter("p1", pr.getDescription())
-                .setParameter("p2", pr.getPrice())
-                .setParameter("p3", pr.getName())
-                .setParameter("id", pr.getId())
+                .setParameter("p1", product.getDescription())
+                .setParameter("p2", product.getPrice())
+                .setParameter("p3", product.getName())
+                .setParameter("id", product.getId())
                 .executeUpdate();
-        logger.info("resultUpdate = " + resultUpdate);
         if (resultUpdate == 0) {
             throw new OptimisticLockException("product not modified");
         } else {

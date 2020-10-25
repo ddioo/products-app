@@ -21,8 +21,6 @@ public class ProductsController {
 
     private final ProductService service;
 
-    Logger logger = Logger.getLogger("Controller");
-
     @Inject
     public ProductsController(ProductService service) {
 
@@ -59,7 +57,6 @@ public class ProductsController {
     @Path("/{id}")
     public Response update(Product product) throws ProductNotFound {
         ProductResponse response = this.service.update(product);
-        logger.info("INSIDE UPDATE - " + response);
         if (response == null) {
             throw new NotFoundException();
         }
