@@ -43,11 +43,17 @@ https://hub.docker.com/layers/borysova/myrepository/latest/images/sha256-ae876f0
 
 ### Examples
 
-#####API requests sent with Postman 
+#####API requests sent with Postman
+ 
 #####content-type: application/json
 
 
+
+
+
 ##### GET
+
+##### /products
 
 ##### http://localhost:8080/products
 
@@ -63,7 +69,9 @@ List of all products in JSON:
 
 ##### PUT
 
-###### http://localhost:8080/products/products/1
+##### /products/{id}
+
+###### http://localhost:8080/products/1
 
 ```bash
 Body:
@@ -107,6 +115,8 @@ http://localhost:8080/products will return list without product "id":4
 
 ##### POST
 
+/products
+
 ###### http://localhost:8080/products
 
 
@@ -118,6 +128,8 @@ Body:
 
 
 ##### GET 
+
+/products
 
 ##### http://localhost:8080/products
 
